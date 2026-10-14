@@ -1,0 +1,38 @@
+# © ENG.YSWEF — yswefalhmzy@gmail.com
+name: Catalog bug report
+description: Report incorrect catalog metadata or a broken download, not a vulnerability.
+title: '[Bug]: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For vulnerabilities, use a private Security Advisory or email yswefalhmzy@gmail.com.
+        Do not include credentials, personal paths, private logs or exploit details here.
+  - type: input
+    id: tool
+    attributes:
+      label: Tool ID and version
+      description: Use "catalog" if the issue is not specific to a tool.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Windows version and Grimoire version (if applicable)
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Public release URL, hash mismatch or redacted error message.
