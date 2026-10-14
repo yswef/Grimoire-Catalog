@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "© ENG.YSWEF — yswefalhmzy@gmail.com",
+  "title": "Grimoire catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_at", "tools"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "version", "description", "license", "release"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,40}$" },
+          "name": { "type": "string", "maxLength": 60 },
+          "name_i18n": { "type": "object", "propertyNames": { "pattern": "^[a-z]{2}$" }, "additionalProperties": { "type": "string", "maxLength": 60 } },
+          "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$" },
+          "description": { "type": "string", "maxLength": 300 },
+          "description_i18n": { "type": "object", "propertyNames": { "pattern": "^[a-z]{2}$" }, "additionalProperties": { "type": "string", "maxLength": 300 } },
+          "license": { "type": "string" },
+          "min_windows": { "type": "string", "default": "10" },
+          "data_dir": { "type": "string", "pattern": "^%APPDATA%\\\\YSWEF\\\\[A-Za-z0-9._-]+$" },
+          "release": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["url", "asset", "sha256", "size"],
+            "properties": {
+              "url": { "type": "string", "pattern": "^https://github\\.com/yswef/[A-Za-z0-9._-]+/releases/download/[^\\s]+$" },
+              "asset": { "type": "string", "pattern": "^[A-Za-z0-9._-]+$" },
+              "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+              "size": { "type": "integer", "minimum": 1 },
+              "kind": { "enum": ["installer", "portable"], "default": "installer" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

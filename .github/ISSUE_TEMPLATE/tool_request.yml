@@ -1,0 +1,36 @@
+# © ENG.YSWEF — yswefalhmzy@gmail.com
+name: Tool request
+description: Suggest a free ENG.YSWEF tool for the catalog.
+title: '[Tool]: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tools remain free. Donations never buy placement or special access.
+        Requests are reviewed; submission does not authorize redistribution.
+  - type: input
+    id: name
+    attributes:
+      label: Tool name
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Purpose and Windows use case
+    validations:
+      required: true
+  - type: input
+    id: upstream
+    attributes:
+      label: Official project or release URL
+  - type: textarea
+    id: license
+    attributes:
+      label: License and redistribution permission
+    validations:
+      required: true
+  - type: textarea
+    id: languages
+    attributes:
+      label: Suggested English and Arabic name and description
