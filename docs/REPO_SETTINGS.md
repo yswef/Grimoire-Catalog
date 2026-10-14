@@ -54,8 +54,9 @@ A ruleset is not made effective just by documenting it here.
   PRs or enable `pull_request_target` execution of untrusted content. Review/pin
   third-party actions. Gitleaks Action is configured for the stated personal account;
   revisit its licensing if the repository moves to an organization.
-- Run the hosted workflow after owner publication; neither its runner behavior nor
-  real Release CDN downloads could be tested in this local session.
+- Hosted PR validation passed in PR #1 (run 38493764726), including the Gitleaks
+  step. Confirm the final merged `main` run also passes. Real Release CDN downloads
+  and the private application's behavior still require owner validation.
 - Consider immutable Releases where available, independent hash publication, and
   separation of publishing authority; verify current GitHub availability first.
 

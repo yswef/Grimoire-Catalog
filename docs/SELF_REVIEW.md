@@ -13,15 +13,15 @@ Review date: 2026-10-13. Status labels distinguish completed fixes from owner wo
 | Real Release transport | open | Sandbox cannot reach GitHub's asset CDN. TODO: owner tests first real asset and redirect policy. Do not claim live downloads or private installer compatibility have passed. |
 | Concurrency/local threat model | open | Atomic replacement protects against partial writes; helper notices edits during download but is not fully race-proof. Use a trusted local checkout/staging folder, finalized artifacts and a single writer; malicious concurrent filesystem mutation is outside this scaffold's guarantees. |
 | CI supply chain | open | Action refs are pinned to verified upstream commit SHAs, credentials are not persisted, token permissions are read-only and fork PR code receives no publishing privilege. Python direct versions and Gitleaks version are pinned, but transitive packages and downloaded tool bytes lack repository hash locks. TODO: review full dependency locking and provenance. Dependabot covers actions only. |
-| Local security scan | open | Gitleaks binary retrieval was blocked by CDN network restrictions. Local pre-commit scanning uses detect-secrets 1.5.0 with verification requests disabled; zero findings are required before committing. Gitleaks is configured in CI but has not run locally or on a hosted runner. No scanner proves absence of all secrets. |
+| Security scanning | fixed | Local pre-commit detect-secrets 1.5.0 scanned all 20 deliverable files with verification requests disabled and zero findings. Local Gitleaks binary retrieval remains blocked by CDN restrictions, but the hosted Gitleaks step passed in PR #1, run 38493764726. GitHub's run/step API confirms success; raw hosted log download was inaccessible from the sandbox. No scanner proves absence of all secrets. |
 | Donation model | fixed | Shared support values remain centralized and unchanged. New docs/templates consistently describe free tools, optional donations, no ads/paid tiers or paid placement. No checkout, tracking or gating code was added. |
 | Public support details | needs-owner-decision | Confirm consent to publish supplied wallet-holder details. No donation endpoint or wallet ownership was independently verified. |
 | Catalog licensing | needs-owner-decision | Keep README's all-rights-reserved default. No invented LICENSE; empty license_url remains an explicit TODO after a license decision. |
 | README / policy consistency | open | README is immutable input. Its claims that hashes "guarantee" integrity need the account-compromise qualification in SECURITY.md. Its app promises (undo/rollback, extraction defenses, telemetry, layouts, caching) and exact SemVer wording are not established here. TODO: owner reviews those promises independently. |
 | Signing | open | Only a disabled binary-signing comment exists; no certificate-dependent build step. Local commits have no signing key. Owner must resolve bootstrap integration and enable the separate signed-commit ruleset without rewriting history. |
 | Commit-message policy and checkout handoff | fixed | The initial session reported unwanted trailers injected by the pre-existing commit-msg hook. At the 2026-10-14 handoff, the checkout contained only base commit 9e10696 and the scaffold as untracked files; the previously reported commits were not present in this checkout. Recreate the planned commits from the preserved files, bypassing the known trailer hook with command-local `--no-verify` only after independent tests and secret scanning. Verify each commit body immediately. Do not edit hooks/configuration, overwrite remote history or rewrite any existing commit. |
-| Existing history and branch | open | Session must stay on arena/8cab09a5-grimoire-catalog, not main. Pre-existing 9e10696 uses 170477919+yswef@users.noreply.github.com for both identities; cannot make the full-history identity assertion true without forbidden rewriting. Eight new commits use the requested identity. README was already in the base commit, so the docs commit preserves it rather than recommitting a change. |
-| Tests and scope | fixed | Offline pytest exercises schema, policy, CLIs, streaming failure paths, translation preservation, checksum determinism and atomic-write failure. Explicit empty-catalog and metaschema checks also run before commits. Hosted CI, Windows binaries, actual signing and app behavior remain unverified. |
+| Existing history and branch | open | Session must stay on arena/8cab09a5-grimoire-catalog, not main. Pre-existing 9e10696 uses 170477919+yswef@users.noreply.github.com for both identities; cannot make the full-history identity assertion true without forbidden rewriting. All locally created handoff commits use the requested identity and verified subject-only messages. README was already in the base commit, so the docs commit preserves it rather than recommitting a change. |
+| Tests and scope | fixed | Offline pytest exercises schema, policy, CLIs, streaming failure paths, translation preservation, checksum determinism and atomic-write failure. Explicit empty-catalog and metaschema checks also run before commits. Hosted schema, catalog, regression-test and secret-scanning steps passed in PR #1. Windows binaries, actual binary signing and app behavior remain unverified. |
 
 The initial scaffold did not authorize remote publication. In the 2026-10-14
 follow-up, the owner explicitly authorized documenting, publishing and merging this
@@ -46,5 +46,12 @@ translations are data. There is no UI in this repository.
 - Owner-only settings and product-runtime checks remain open even after integration:
   license choice, empty support license URL, email privacy, account protection,
   signed-commit bootstrap, Windows/app behavior and first real Release download.
-- Record the pull-request URL, hosted check evidence and merge outcome in the
-  publication audit. Do not describe publication as complete before it succeeds.
+- Pull request: [#1](https://github.com/yswef/Grimoire-Catalog/pull/1).
+- Hosted evidence: [validate-catalog run 38493764726](https://github.com/yswef/Grimoire-Catalog/actions/runs/38493764726)
+  completed successfully for source commit `126fa6a945b73ce4f2ee6a341b9e46be3aa45898`.
+  Schema/metaschema validation, regression tests and the Gitleaks step all succeeded.
+- Local evidence: 72 tests passed, the empty catalog and metaschema validated,
+  detect-secrets reported zero findings, and README bytes were unchanged.
+- This audit update must pass CI again before merge. The PR's merge event and final
+  audit comment are the authoritative merge outcome; no completed merge is claimed
+  here in advance. The source branch is retained, with no history rewriting.
