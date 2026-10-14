@@ -1,0 +1,18 @@
+{
+  "$comment": "© ENG.YSWEF — yswefalhmzy@gmail.com | Shared by all apps; links are read from here, never from code.",
+  "developer": "ENG.YSWEF",
+  "email": "yswefalhmzy@gmail.com",
+  "buy_me_a_coffee": "https://buymeacoffee.com/yswef",
+  "wallets": [
+    {
+      "name": "جيب",
+      "number": "1606895",
+      "holder": "يوسف عادل عبد الرحيم يوسف الحمزي"
+    }
+  ],
+  "issues_url": "https://github.com/yswef/grimoire-catalog/issues",
+  "changelog_url": "https://github.com/yswef/grimoire-catalog/blob/main/CHANGELOG.md",
+  "license_url": "",
+  "privacy_url": "https://github.com/yswef/grimoire-catalog/blob/main/PRIVACY.md",
+  "update_check": "via-grimoire"
+}
